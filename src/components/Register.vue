@@ -39,7 +39,7 @@ export default {
                 // 'Access-Control-Allow-Origin': '*'
             }
 
-           axios.post(' https://mcucen-todoappapi.herokuapp.com/api/register',
+           axios.post(' https://mcucen-todoappapi.herokuapp.com/api/register', this.user,
             {
                 headers: headers, body: this.user
 

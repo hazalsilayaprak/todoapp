@@ -4,7 +4,9 @@
   <!-- <login/> -->
   <!-- <register /> -->
   <appHeader></appHeader>
-  <router-view></router-view>
+  <div class="section">
+      <router-view></router-view>
+  </div>
 </div>
 </template>
 
@@ -28,5 +30,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="css" scoped>
+.section {
+    margin-top: 100px;
+}
 </style>

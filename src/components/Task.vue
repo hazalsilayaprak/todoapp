@@ -43,6 +43,7 @@ export default {
     height: 20px;
     background: white;
     border: 1px solid rgb(149, 149, 149);
+    margin-right: 10px;
 }
 .box-checked{
     background: url("../img/check-mark.svg") no-repeat;
