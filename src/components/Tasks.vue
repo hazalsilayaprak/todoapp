@@ -14,15 +14,20 @@
         </div>
         <div class="row w-100">
             <form action="/action_page.php">
-                <div class="form-group">
-                    <label for="todo">ToDo</label>
-                    <input type="text" class="form-control" id="todo" v-model="message">
-                    <textarea class="form-control" v-model="description"></textarea>
+                <button @click.prevent="showForm = true" type="button" class="btn btn-primary" v-show="!showForm">Add New Task</button>
+                <div class="form-group" v-show="showForm">
+                    <label for="todo"><h4 class="mt-5">Add A New Task</h4></label>
+                    <input type="text" @focus="removeBorder" class="form-control" :class="hasBorder" id="todo" v-model="message" placeholder="Task Title">
+                    <div class="text text-danger" role="alert" v-if="showAlert">
+                        Girdi boş olamaz!
+                    </div>
+                    <textarea class="form-control mt-3" v-model="description" placeholder="Task Description (Optional)"></textarea>
+                    <div class="group">
+                        <button type="button" @click.prevent="showForm = false" class="btn btn-outline-secondary">Cancel</button>
+                        <button @click.prevent="submitted" type="button" class="btn btn-primary ml-3">Done</button>
+                    </div>
                 </div>
-                <button @click.prevent="submitted" type="submit" class="btn btn-primary">Submit</button>
-                <div class="alert alert-danger" role="alert" v-if="showAlert">
-                    Girdi boş olamaz!
-                </div>
+
             </form>
         </div>
     </div>
@@ -47,6 +52,8 @@ export default {
             ],
             showAlert: false,
             showTasks: false,
+            showForm: false,
+            hasBorder: '',
         }
     },
     components: {
@@ -71,7 +78,12 @@ export default {
                 this.showAlert = false
             } else {
                 this.showAlert = true
+                this.hasBorder = 'error-border'
             }
+        },
+        removeBorder: function () {
+            this.hasBorder = false
+            this.showAlert = false
         },
         redirected: function() {
             this.$router.push('Login')
@@ -89,17 +101,16 @@ export default {
             localStorage.setItem('tasks', JSON.stringify(this.tasks))
         }
     },
-
     mounted() {
-        var localUser = localStorage.getItem('user')
-        if (localUser != null) {
+        if (localStorage.getItem('is_login') !== null) {
             this.showTasks = true
         }
         var localTasks = localStorage.getItem('tasks')
         if (localTasks != null) {
             this.tasks = JSON.parse(localTasks)
         }
-    }
+    },
+
 }
 </script>
 
@@ -111,6 +122,7 @@ export default {
 }
 form {
     margin-left: 17px;
+    width: 100%;
 }
 .redirect {
     /* margin: 0 auto; */
@@ -121,10 +133,16 @@ form {
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
+.group {
+    display: flex;
+    justify-content: flex-end;
+}
 .btn {
     display: block;
-    margin: auto;
     margin-top: 15px;
+}
+.error-border{
+    border: solid 1px red;
 }
 img {
     display: block;

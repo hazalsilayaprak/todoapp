@@ -39,19 +39,17 @@ export default {
                 // 'Access-Control-Allow-Origin': '*'
             }
 
-           axios.post(' https://mcucen-todoappapi.herokuapp.com/api/register', this.user,
-            {
-                headers: headers, body: this.user
-
-            })
-           .then(res => console.log(res))
-           .catch(error => console.log(error))
+            axios.post('https://mcucen-todoappapi.herokuapp.com/api/register', this.user)
+                .then(response => {
+                    this.$router.push('login')
+                })
+                .catch(error => console.log(error))
         },
-        mounted() {
-            // var localUser = localStorage.getItem('user')
-            // if (localUser != null) {
-            //     this.items = JSON.parse(localUser)
-            // }
+
+    },
+    mounted() {
+        if (localStorage.getItem('is_login')) {
+            this.$router.push('tasks')
         }
     }
 }

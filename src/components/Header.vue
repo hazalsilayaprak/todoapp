@@ -17,9 +17,12 @@
             <ul class="navbar-nav">
                 <router-link to="/tasks" tag="li" class="btn btn-light nav-item mr-3" active-class="active" exact><a style="text-decoration: none;">ToDoApp</a></router-link>
             </ul>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" v-if="!isLogin">
                 <router-link to="/login" tag="li" class="btn btn-primary nav-item mr-3" active-class="active"><a class="text-white">Login</a></router-link>
                 <router-link to="/register" tag="li" class="btn btn-primary nav-item mr-3" active-class="active" style="float:right"><a class="text-white">Register</a></router-link>
+            </ul>
+            <ul class="navbar-nav" v-else>
+                <a href="" @click.prevent="logout" class="btn btn-danger nav-item mr-3">Logout</a>
             </ul>
         </div>
     </nav>
@@ -27,7 +30,28 @@
 </template>
 
 <script>
-export default {}
+export default {
+    data() {
+        return {
+            isLogin: localStorage.getItem('is_login')
+        }
+    },
+    methods: {
+        logout() {
+            localStorage.removeItem('is_login')
+            localStorage.removeItem('token')
+            this.isLogin = false
+            // Asagidaki komponentten yukariya veri gonderiyorum
+            // "refreshPage" adi ile veri yakalanacak
+            this.$emit('refreshPage', true)
+        }
+    },
+    watch: {
+        '$route': function() {
+            this.isLogin = localStorage.getItem('is_login')
+        }
+    }
+}
 </script>
 
 <style lang="css" scoped>

@@ -3,8 +3,8 @@
   <!-- <tasks /> -->
   <!-- <login/> -->
   <!-- <register /> -->
-  <appHeader></appHeader>
-  <div class="section">
+  <appHeader @refreshPage="keyValue += 1"></appHeader>
+  <div class="section" :key="keyValue">
       <router-view></router-view>
   </div>
 </div>
@@ -18,7 +18,7 @@ import Header from './Header.vue'
 export default {
   data: function() {
     return {
-
+        keyValue: 1,
     }
   },
   components: {

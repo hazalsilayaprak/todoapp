@@ -1,43 +1,66 @@
 <template>
 <div class="container">
     <form>
+        <i class="far fa-heart"></i>
         <div class="form-group">
             <label>Email</label>
-            <input type="email" class="form-control" v-model="input.email" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" class="form-control" v-model="input.username" aria-describedby="emailHelp" placeholder="Enter email">
         </div>
         <div class="form-group">
             <label>Password</label>
             <input type="password" class="form-control" v-model="input.password" placeholder="Password">
         </div>
-        <button @click.prevent="save" type="submit" class="btn btn-primary">Submit</button>
+        <button @click.prevent="save" type="submit" class="btn btn-primary">
+            <i class="fas fa-pulse fa-spinner" v-if="loading"></i>
+            Submit
+        </button>
+        <div class="alert alert-danger" role="alert" v-if="showError">
+          E-mail or password is wrong
+        </div>
     </form>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
-            items: [{
-                email: '',
-                password: '',
-            }],
             input: {
-                email: '',
+                grant_type: 'password',
+                client_id: 2,
+                client_secret: 'SWadHJA0ABk3HvTpBraSrLJK6WCTYdUwlsOlSa2b',
+                username: '',
                 password: '',
-            }
+                // scope: '*'
+            },
+            loading: false,
+            showError: false,
         }
     },
     methods: {
         save: function() {
-            var em = this.input.email
-            var pd = this.input.password
-
-            this.items.push({
-                email: em,
-                password: pd,
+            this.loading = true
+            axios.post('https://mcucen-todoappapi.herokuapp.com/oauth/token', this.input)
+            .then(response => {
+                // this.$store.state.token = response.data.access_token
+                // this.$store.state.isLogin = true
+                localStorage.setItem('is_login', true)
+                localStorage.setItem('access_token', true)
+                this.$router.push('tasks')
             })
+            .catch(error => {
+                console.log(error)
+                this.showError = true
+
+            })
+            .finally(() => this.loading = false )
         },
+    },
+    mounted() {
+        if (localStorage.getItem('is_login')) {
+            this.$router.push('tasks')
+        }
     }
 }
 </script>
