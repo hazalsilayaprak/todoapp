@@ -1,7 +1,6 @@
 <template>
 <div class="container">
     <form>
-        <i class="far fa-heart"></i>
         <div class="form-group">
             <label>Email</label>
             <input type="email" class="form-control" v-model="input.username" aria-describedby="emailHelp" placeholder="Enter email">
@@ -10,7 +9,7 @@
             <label>Password</label>
             <input type="password" class="form-control" v-model="input.password" placeholder="Password">
         </div>
-        <button @click.prevent="save" type="submit" class="btn btn-primary">
+        <button @click.prevent="save" type="submit" class="btn btn-secondary">
             <i class="fas fa-pulse fa-spinner" v-if="loading"></i>
             Submit
         </button>
@@ -69,5 +68,15 @@ export default {
 .container {
     width: 100%;
     max-width: 800px;
+}
+button {
+    background-color: #2d3436;
+    border-color: #2d3436;
+}
+button:hover {
+    background-color: #1d2224;
+}
+button:active {
+    background-color: #1d2224;
 }
 </style>

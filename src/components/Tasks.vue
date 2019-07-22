@@ -1,20 +1,18 @@
 <template>
 <div class="container">
-    <div v-if="showTasks">
+    <div class="mt-5" v-if="showTasks">
         <h1>Tasks</h1>
         <div class="row w-100">
             <div class="col">
                 <h4>Today</h4>
-                <div v-for="task in tasks">
-                    <div @click.prevent="done(task.id)">
-                        <task :data="task" />
-                    </div>
+                <div v-for="task in tasks" :key="task.id">
+                    <task :data="task" @removeTask="removeTask" @doneTask="done"/>
                 </div>
             </div>
         </div>
         <div class="row w-100">
             <form action="/action_page.php">
-                <button @click.prevent="showForm = true" type="button" class="btn btn-primary" v-show="!showForm">Add New Task</button>
+                <button @click.prevent="showForm = true" type="button" class="btn btn-secondary" v-show="!showForm">Add New Task</button>
                 <div class="form-group" v-show="showForm">
                     <label for="todo"><h4 class="mt-5">Add A New Task</h4></label>
                     <input type="text" @focus="removeBorder" class="form-control" :class="hasBorder" id="todo" v-model="message" placeholder="Task Title">
@@ -34,7 +32,8 @@
     <div v-else>
         <div class="redirect">
             <img src="../img/bored.svg" width="50" height="50">
-            Bu sayfayı görüntülemek için giriş yapmanız gerekli! <button @click.prevent="redirected" class="btn btn-primary" >Login</button>
+            Bu sayfayı görüntülemek için giriş yapmanız gerekli!
+            <button @click.prevent="redirected" class="btn btn-primary" >Login</button>
         </div>
     </div>
 </div>
@@ -99,7 +98,16 @@ export default {
                 }
             }
             localStorage.setItem('tasks', JSON.stringify(this.tasks))
-        }
+        },
+        removeTask: function(task) {
+            for( var i = 0; i < this.tasks.length; i++){
+               if ( this.tasks[i].id === task.id) {
+                   const index = this.tasks.indexOf(task);
+                   this.tasks.splice(index, 1);
+               }
+            }
+            localStorage.setItem('tasks', JSON.stringify(this.tasks))
+        },
     },
     mounted() {
         if (localStorage.getItem('is_login') !== null) {
@@ -140,6 +148,7 @@ form {
 .btn {
     display: block;
     margin-top: 15px;
+    margin-left: 300px;
 }
 .error-border{
     border: solid 1px red;
