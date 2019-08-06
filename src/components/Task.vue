@@ -14,7 +14,12 @@
             </div>
         </div>
         <div class="img-div">
-            <a @click.prevent="deleteTask"><img src="../img/delete.svg"></a>
+            <a @click.prevent="updateTask">
+                <i class="far fa-edit"></i>
+            </a>
+            <a @click.prevent="deleteTask">
+                <i class="far fa-trash-alt"></i>
+            </a>
         </div>
     </div>
 </div>
@@ -25,15 +30,18 @@ export default {
     props: ['data'],
     data() {
         return {
-            task: this.data
+            task: this.data,
         }
     },
     methods: {
-        deleteTask: function () {
+        deleteTask: function() {
             this.$emit('removeTask', this.task)
         },
         doneTask() {
             this.$emit('doneTask', this.task.id)
+        },
+        updateTask: function() {
+            this.$emit('editTask', this.task)
         }
     }
 }
@@ -49,19 +57,16 @@ export default {
     align-items: center;
     justify-content: space-between;
 }
-.form-check-input {
-    display: none;
-}
 .box {
     width: 20px;
     height: 20px;
     background: white;
-    border: 1px solid #b03225;
+    border: 1px solid #FF6C6C;
     border-radius: 100%;
     margin-right: 10px;
 }
 .box-checked{
-    background: #c0392b url("../img/checked.svg") no-repeat;
+    background: #FF6C6C url("../img/checked.svg") no-repeat;
     background-size:12px;
     background-position: center;
 }
@@ -71,5 +76,37 @@ export default {
 img {
     width: 24px;
     height: 24px;
+}
+@media screen (max-width:990px) {
+
+    .box {
+        width: 12px;
+        height: 12px;
+        background: white;
+        border: 1px solid #FF6C6C;
+        border-radius: 100%;
+        margin-right: 6px;
+    }
+    .box-checked{
+        background: #FF6C6C url("../img/checked.svg") no-repeat;
+        background-size: 7px;
+        background-position: center;
+    }
+    .task-message p {
+        margin-bottom: 0;
+    }
+    img {
+        width: 14px;
+        height: 14px;
+    }
+}
+.form-check-input {
+    display: none;
+}
+.fa-trash {
+    color: #273037;
+}
+.fa-edit {
+    margin-right: 15px;
 }
 </style>
