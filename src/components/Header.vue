@@ -1,6 +1,6 @@
 <template>
 <div class="section-top">
-    <div class="section-left">
+    <div class="section-left" v-if="isLogin">
         <ul id="list">
             <router-link to="/tasks" tag="li" active-class="active" class="d-flex align-items-center">
                 <div class="circle" style="background: #FE6C6B;"></div>
@@ -16,7 +16,7 @@
             </router-link>
         </ul>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FF6C6C;">
+    <nav class="navbar navbar-expand-lg navbar-light" :class="isLogin ? 'navbarLogin' : ''" style="background-color: #FF6C6C;">
         <a class="navbar-brand"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -56,7 +56,7 @@
 export default {
     data() {
         return {
-            isLogin: localStorage.getItem('is_login')
+            isLogin: localStorage.getItem('is_login'),
         }
     },
     methods: {
@@ -82,9 +82,13 @@ export default {
     .navbar {
         position: fixed;
         z-index: 999999;
-        left: 20%;
-        width: 80%;
         height: 64px;
+        width: 100%;
+        left: 0;
+    }
+    .navbarLogin {
+        width: 80%;
+        left: 20%;
     }
     .navbar-collapse {
         display: flex;

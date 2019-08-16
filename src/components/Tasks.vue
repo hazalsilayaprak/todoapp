@@ -93,6 +93,8 @@ export default {
                     //this.tasks = localStorage.getItem('tasks')
                     this.showAlert = false
                 }
+                this.message = ''
+                this.description = ''
 
             } else {
                 this.showAlert = true

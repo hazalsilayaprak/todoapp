@@ -1,10 +1,7 @@
 <template>
 <div class="">
-  <!-- <tasks /> -->
-  <!-- <login/> -->
-  <!-- <register /> -->
   <appHeader @refreshPage="keyValue += 1"></appHeader>
-  <div class="section" :key="keyValue">
+  <div class="section" :class="isLogin ? 'login-section' : ''" :key="keyValue">
       <router-view></router-view>
   </div>
 </div>
@@ -19,6 +16,7 @@ export default {
   data: function() {
     return {
         keyValue: 1,
+        isLogin: localStorage.getItem('is_login'),
     }
   },
   components: {
@@ -32,6 +30,11 @@ export default {
 
 <style lang="css" scoped>
 .section {
+    margin-left: 0;
+    margin-top: 200px;
+
+}
+.login-section {
     margin-top: 100px;
     margin-left: 22%;
 }
